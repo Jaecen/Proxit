@@ -1,0 +1,28 @@
+@font-face {
+    font-family: 'Beleren';
+    src: url('Beleren-Bold.ttf') format('truetype');
+}
+
+body {
+    margin: 0;
+}
+
+.card-proxy-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+@media print {
+    .card-entry, .proxit-header {
+        display: none;
+    }
+
+    .card-proxy-list {
+        display: block;
+    }
+
+    card-proxy {
+        float: left;
+    }
+}
