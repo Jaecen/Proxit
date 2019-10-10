@@ -38,14 +38,17 @@ const cardListSemantics = cardListGrammar.createSemantics()
 
 const cardEntryList = document.querySelector('.card-entry-list');
 const cardEntrySubmitButton = document.querySelector('.card-entry-submit');
+const cardEntryIncludeExtraInfoCheckbox = document.querySelector('.include-extra-info');
+
 cardEntrySubmitButton.addEventListener('click', function() {
+    const includeExtraInfo = cardEntryIncludeExtraInfoCheckbox.checked;
     const match = cardListGrammar.match(cardEntryList.value);
     if(match.failed()) {
         console.error('Parse failure', match.message);
         return;
     }
     const result = cardListSemantics(match).load();
-    generateProxies(result);
+    generateProxies(result, includeExtraInfo);
 });
 
 async function getScryfallCard(name, set) {
@@ -66,7 +69,7 @@ async function getScryfallCard(name, set) {
     return await response.json();
 }
 
-async function generateProxies(cards) {
+async function generateProxies(cards, includeExtraInfo) {
     while(cardProxyList.firstChild) {
         cardProxyList.removeChild(cardProxyList.firstChild);
     }
@@ -87,22 +90,24 @@ async function generateProxies(cards) {
             nameSlot.setAttribute('slot', 'card-name');
             nameSlot.textContent = card.name;
             
-            const costSlot = document.createElement('span');
-            cardProxy.appendChild(costSlot);
-            costSlot.setAttribute('slot', 'card-cost');
-            for(let costElement of cost) {
-                costSlot.appendChild(costElement.cloneNode(true));
-            }
-            
-            const typeSlot = document.createElement('span');
-            cardProxy.appendChild(typeSlot);
-            typeSlot.setAttribute('slot', 'card-type');
-            typeSlot.textContent = card.type_line;
-                    
-            const symbolSlot = document.createElement('span');
-            cardProxy.appendChild(symbolSlot);
-            symbolSlot.setAttribute('slot', 'card-symbol');
-            symbolSlot.appendChild(symbol.cloneNode(true));
+            if(includeExtraInfo) {
+                const costSlot = document.createElement('span');
+                cardProxy.appendChild(costSlot);
+                costSlot.setAttribute('slot', 'card-cost');
+                for(let costElement of cost) {
+                    costSlot.appendChild(costElement.cloneNode(true));
+                }
+                
+                const typeSlot = document.createElement('span');
+                cardProxy.appendChild(typeSlot);
+                typeSlot.setAttribute('slot', 'card-type');
+                typeSlot.textContent = card.type_line;
+                        
+                const symbolSlot = document.createElement('span');
+                cardProxy.appendChild(symbolSlot);
+                symbolSlot.setAttribute('slot', 'card-symbol');
+                symbolSlot.appendChild(symbol.cloneNode(true));
+                }
         }
     }
 }
