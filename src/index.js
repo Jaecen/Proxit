@@ -88,11 +88,12 @@ async function generateProxies(cards, includeExtraInfo) {
     for(let cardInfo of cards) {
         const card = await getScryfallCard(cardInfo.name, cardInfo.set);
         const color = determineColor(card);
-        const symbol = buildSymbol(card.set, card.rarity);
-        const cost = Array.from(buildCost(card.mana_cost));
+        const name = buildName(card);
+        const type = buildType(card);
+        const symbol = buildSymbol(card);
+        const cost = Array.from(buildCost(card));
 
         for(let copyIndex = 0; copyIndex < cardInfo.quantity; copyIndex++) {
-            console.log(card);
             const cardProxy = document.createElement('card-proxy');
             cardProxy.setAttribute('border', color);
             cardProxyList.appendChild(cardProxy);
@@ -100,7 +101,7 @@ async function generateProxies(cards, includeExtraInfo) {
             const nameSlot = document.createElement('span');
             cardProxy.appendChild(nameSlot);
             nameSlot.setAttribute('slot', 'card-name');
-            nameSlot.textContent = card.name;
+            nameSlot.textContent = name;
             
             if(includeExtraInfo) {
                 const costSlot = document.createElement('span');
@@ -113,7 +114,7 @@ async function generateProxies(cards, includeExtraInfo) {
                 const typeSlot = document.createElement('span');
                 cardProxy.appendChild(typeSlot);
                 typeSlot.setAttribute('slot', 'card-type');
-                typeSlot.textContent = card.type_line;
+                typeSlot.textContent = type;
                         
                 const symbolSlot = document.createElement('span');
                 cardProxy.appendChild(symbolSlot);
@@ -125,11 +126,15 @@ async function generateProxies(cards, includeExtraInfo) {
 }
 
 function determineColor(card) {
+    if((card.card_faces || []).length > 0) {
+        return determineColor(card.card_faces[0]);
+    }
+
     if(card.type_line.split(' ').includes('Land')) {
         return 'land';
     }
 
-    if(card.colors.length === 0) {
+    if(!card.colors || card.colors.length === 0) {
         return 'colorless';
     }
 
@@ -158,20 +163,36 @@ function determineColor(card) {
     return 'multicolor';
 }
 
-function determineColorFromAbbreviation(colorAbbreviation) {
+function buildName(card) {
+    if((card.card_faces || []).length > 0) {
+        return buildName(card.card_faces[0]);
+    }
 
+    return card.name;
 }
 
-function buildSymbol(set, rarity) {
+function buildType(card) {
+    if((card.card_faces || []).length > 0) {
+        return buildType(card.card_faces[0]);
+    }
+
+    return card.type_line;
+}
+
+function buildSymbol(card) {
     const i = document.createElement('i');
-    i.setAttribute('class', `ss ss-${set.toLowerCase()} ss-${rarity.toLowerCase()} ss-grad`);
+    i.setAttribute('class', `ss ss-${card.set.toLowerCase()} ss-${card.rarity.toLowerCase()} ss-grad`);
 
     return i;
 }
 
-function* buildCost(cost) {
+function* buildCost(card) {
+    if((card.card_faces || []).length > 0) {
+        yield * buildCost(card.card_faces[0]);
+    }
+    
     const costRegex = /\{(\w+?)\}/g;
-    while ((m = costRegex.exec(cost)) !== null && m.length > 1) {
+    while ((m = costRegex.exec(card.mana_cost)) !== null && m.length > 1) {
         const i = document.createElement('i');
         i.setAttribute('class', `ms ms-${m[1].toLowerCase()} ms-cost`);
         yield i;
