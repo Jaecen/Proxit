@@ -8,6 +8,16 @@ customElements.define('card-proxy',
                 .attachShadow({ mode: 'open' })
                 .appendChild(template.content.cloneNode(true));
         }
+
+        connectedCallback() {
+            let border = 'colorless';
+            if(this.hasAttribute('border')) {
+                border = this.getAttribute('border');
+            }
+
+            const wrapperElement = this.shadowRoot.querySelector('.card-proxy-wrapper');
+            wrapperElement.className += ` card-proxy-wrapper-${border}`;
+          }
     });
 
 const cardListGrammar = ohm.grammarFromScriptElement();
@@ -77,12 +87,14 @@ async function generateProxies(cards, includeExtraInfo) {
     // Iterate through each card, look up the details, and write it out on the grid
     for(let cardInfo of cards) {
         const card = await getScryfallCard(cardInfo.name, cardInfo.set);
-
+        const color = determineColor(card);
         const symbol = buildSymbol(card.set, card.rarity);
         const cost = Array.from(buildCost(card.mana_cost));
 
         for(let copyIndex = 0; copyIndex < cardInfo.quantity; copyIndex++) {
+            console.log(card);
             const cardProxy = document.createElement('card-proxy');
+            cardProxy.setAttribute('border', color);
             cardProxyList.appendChild(cardProxy);
             
             const nameSlot = document.createElement('span');
@@ -110,6 +122,44 @@ async function generateProxies(cards, includeExtraInfo) {
                 }
         }
     }
+}
+
+function determineColor(card) {
+    if(card.type_line.split(' ').includes('Land')) {
+        return 'land';
+    }
+
+    if(card.colors.length === 0) {
+        return 'colorless';
+    }
+
+    if(card.colors.length === 1) {
+        if(card.colors[0] === 'W') {
+            return 'white';
+        }
+    
+        if(card.colors[0] === 'U') {
+            return 'blue';
+        }
+    
+        if(card.colors[0] === 'B') {
+            return 'black';
+        }
+    
+        if(card.colors[0] === 'R') {
+            return 'red';
+        }
+    
+        if(card.colors[0] === 'G') {
+            return 'green';
+        }
+    }
+
+    return 'multicolor';
+}
+
+function determineColorFromAbbreviation(colorAbbreviation) {
+
 }
 
 function buildSymbol(set, rarity) {
