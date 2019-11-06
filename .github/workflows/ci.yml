@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and publish Docker image
+      uses: elgohr/Publish-Docker-Github-Action@2.7
+      with:
+        name: myDocker/repository
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        registry: docker.pkg.github.com
+        tag_names: true
+
