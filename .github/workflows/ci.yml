@@ -13,7 +13,7 @@ jobs:
     - name: Build and publish Docker image
       uses: elgohr/Publish-Docker-Github-Action@2.7
       with:
-        name: Jaecen/proxit/proxit
+        name: jaecen/proxit/proxit
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: docker.pkg.github.com
