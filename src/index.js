@@ -25,13 +25,16 @@ const cardListSemantics = cardListGrammar.createSemantics()
     .addOperation('load', {
         list: function(firstLine, eol1, spaces, otherLines, eol2) {
             return [firstLine.load(), ...otherLines.load()].map((line) => ({
-                quantity: parseInt(line[0][0]) || 1,
+                quantity: parseInt(line[0]) || 1,
                 name: line[1],
                 set: line[2][0]
             }))
         },
         line: function(leadingWhitespace, quantity, spaces1, cardName, spaces2, setName) {
             return [quantity.load(), cardName.load(), setName.load()];
+        },
+        quantity: function(a) {
+            return a.load().join('');
         },
         cardName: function(a) {
             var x = a.load();
