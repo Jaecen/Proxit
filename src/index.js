@@ -53,10 +53,13 @@ const cardEntryIncludeExtraInfoCheckbox = document.querySelector('.include-extra
 cardEntrySubmitButton.addEventListener('click', function() {
     const includeExtraInfo = cardEntryIncludeExtraInfoCheckbox.checked;
     const match = cardListGrammar.match(cardEntryList.value);
+
     if(match.failed()) {
-        console.error('Parse failure', match.message);
-        return;
+        const errors = [`Parse failure: <pre>${match.message}</pre>`];
+        clearLog();
+        displayLog(errors);
     }
+
     const result = cardListSemantics(match).load();
     generateProxies(result, includeExtraInfo);
 });
@@ -84,9 +87,17 @@ async function generateProxies(cards, includeExtraInfo) {
         cardProxyList.removeChild(cardProxyList.firstChild);
     }
 
+    clearLog();
+    let errors = [];
+
     // Iterate through each card, look up the details, and write it out on the grid
     for(let cardInfo of cards) {
         const card = await getScryfallCard(cardInfo.name, cardInfo.set);
+        if(!card) {
+            errors.push(`Could not find "${cardInfo.name}" and set "${cardInfo.set}"`);
+            continue;
+        }
+
         const color = determineColor(card);
         const name = buildName(card);
         const type = buildType(card);
@@ -123,6 +134,51 @@ async function generateProxies(cards, includeExtraInfo) {
                 symbolSlot.appendChild(symbol.cloneNode(true));
                 }
         }
+    }
+
+    displayLog(errors);
+}
+
+function clearLog() {
+    const generationNotes = document.getElementById('generationNotes');
+
+    while(generationNotes.firstChild) {
+        generationNotes.removeChild(generationNotes.firstChild);
+    }
+}
+
+function displayLog(errors) {
+    const log = document.getElementById('log');
+    const generationNotes = document.getElementById('generationNotes');
+
+    if(errors.length > 0) {
+        const messageContainer = document.createElement('div');
+        generationNotes.appendChild(messageContainer);
+        messageContainer.classList.add('message');
+        messageContainer.classList.add('is-danger');
+
+        const messageHeader = document.createElement('div');
+        messageContainer.appendChild(messageHeader);
+        messageHeader.classList.add('message-header');
+        messageHeader.innerText = 'Error';
+
+        const messageBody = document.createElement('div');
+        messageContainer.appendChild(messageBody);
+        messageBody.classList.add('message-body');
+        
+        const messageBodyErrorList = document.createElement('ul');
+        messageBody.appendChild(messageBodyErrorList);
+
+        for(let error of errors) {
+            const messageBodyErrorListItem = document.createElement('li');
+            messageBodyErrorList.appendChild(messageBodyErrorListItem);
+
+            messageBodyErrorListItem.innerHTML = error;
+        }
+
+        log.classList.remove('is-hidden');
+    } else {
+        log.classList.add('is-hidden');
     }
 }
 
