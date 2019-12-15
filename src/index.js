@@ -103,7 +103,8 @@ async function generateProxies(cards, includeExtraInfo) {
             nameSlot.setAttribute('slot', 'card-name');
             nameSlot.textContent = name;
             
-            if(includeExtraInfo) {
+            // Only include extra details if the box is checked and a set was specified
+            if(includeExtraInfo && cardInfo.set) {
                 const costSlot = document.createElement('span');
                 cardProxy.appendChild(costSlot);
                 costSlot.setAttribute('slot', 'card-cost');
