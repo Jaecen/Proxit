@@ -1,36 +1,13 @@
-@font-face {
-    font-family: 'Beleren';
-    src: url('Beleren-Bold.ttf') format('truetype');
-}
-
 body {
-    margin: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.card-proxy-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.include-extra-info-control {
-    line-height: 2.25;
-}
-
-@media print {
-    .card-entry, .proxit-header {
-        display: none;
-    }
-
-    .card-proxies {
-        padding: 0;
-    }
-
-    .card-proxy-list {
-        display: block;
-    }
-
-    card-proxy {
-        float: left;
-    }
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
