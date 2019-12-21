@@ -12,29 +12,50 @@ const sampleEntry =
 1 Thantis the War Weaver [C18]
 1 Arlinn Kord [SOI]`;
 
-export default function CardProxyManagement() {
-  return (
-    <section className="section">
-      <div className='container'>
+class CardProxyManagement extends React.Component {
+  constructor(props) {
+    super(props);
 
-        <div className='field'>
-          <label className='label'>Card List</label>
-          <div className='control'>
-            <textarea className='textarea card-entry-list' rows='10' defaultValue={sampleEntry} />
+    this.state = { entry: sampleEntry };
+    this.handleEntryChange = this.handleEntryChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleEntryChange(event) {
+    this.setState({ entry: event.target.value });
+  }
+
+  handleSubmit(event) {
+    var x = CardListParser(this.state.entry);
+    console.log(x);
+  }
+
+  render() {
+    return (
+      <section className="section">
+        <div className='container'>
+
+          <div className='field'>
+            <label className='label'>Card List</label>
+            <div className='control'>
+              <textarea
+                className='textarea card-entry-list'
+                rows='10'
+                value={this.state.entry}
+                onChange={this.handleEntryChange} />
+            </div>
           </div>
-        </div>
 
-        <div className='field'>
-          <div className='control'>
-            <button className='button is-primary' onClick={clickydoo}>Generate Proxies</button>
+          <div className='field'>
+            <div className='control'>
+              <button className='button is-primary' onClick={this.handleSubmit}>Generate Proxies</button>
+            </div>
           </div>
-        </div>
 
-      </div>
-    </section>
-  );
+        </div>
+      </section>
+    );
+  }
 };
 
-function clickydoo() {
-  CardListParser();
-}
+export default CardProxyManagement;
