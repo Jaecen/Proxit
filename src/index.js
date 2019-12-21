@@ -17,7 +17,19 @@ customElements.define('card-proxy',
 
             const wrapperElement = this.shadowRoot.querySelector('.card-proxy-wrapper');
             wrapperElement.className += ` card-proxy-wrapper-${border}`;
-          }
+        }
+    });
+
+customElements.define('deck-marker',
+    class extends HTMLElement {
+        constructor() {
+            super();
+
+            const template = document.querySelector('#deckMarkerTemplate');
+            const shadowRoot = this
+                .attachShadow({ mode: 'open' })
+                .appendChild(template.content.cloneNode(true));
+        }
     });
 
 const cardListGrammar = ohm.grammarFromScriptElement();
