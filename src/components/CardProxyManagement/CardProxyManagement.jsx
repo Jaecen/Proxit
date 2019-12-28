@@ -1,5 +1,12 @@
 import React from 'react';
-import CardListParser from '../../services/CardListParser'
+
+import Actions from './actions'
+import Reducer from './reducer'
+
+import { useActions } from './actions' 
+import { applySagaMiddleware } from './sagaMiddleware' 
+
+import CardProxyList from '../CardProxyList';
 
 const sampleEntry =
   `1 Acidic Slime [CMD]
@@ -12,26 +19,18 @@ const sampleEntry =
 1 Thantis the War Weaver [C18]
 1 Arlinn Kord [SOI]`;
 
-class CardProxyManagement extends React.Component {
-  constructor(props) {
-    super(props);
+const initialState = {
+  cardList: sampleEntry,
+  cards: [],
+};
 
-    this.state = { entry: sampleEntry };
-    this.handleEntryChange = this.handleEntryChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
 
-  handleEntryChange(event) {
-    this.setState({ entry: event.target.value });
-  }
 
-  handleSubmit(event) {
-    var x = CardListParser(this.state.entry);
-    console.log(x);
-  }
+export default () => {
+  const { state, actions } = React.useContext(CardProxyContext);
 
-  render() {
-    return (
+  return (
+    <>
       <section className="section">
         <div className='container'>
 
@@ -41,21 +40,21 @@ class CardProxyManagement extends React.Component {
               <textarea
                 className='textarea card-entry-list'
                 rows='10'
-                value={this.state.entry}
-                onChange={this.handleEntryChange} />
+                value={state.cardList}
+                onChange={ (event) => dispatch(Actions.updateCardList(event.target.value)) } />
             </div>
           </div>
 
           <div className='field'>
-            <div className='control'>
-              <button className='button is-primary' onClick={this.handleSubmit}>Generate Proxies</button>
+           <div className='control'>
+            <button className='button is-primary' onClick={ () => dispatch(Actions.requestCardProxies()) }>Generate Proxies</button>
             </div>
           </div>
 
         </div>
       </section>
-    );
-  }
-};
 
-export default CardProxyManagement;
+      <CardProxyList cards={state.cards} />
+    </>
+  );
+}

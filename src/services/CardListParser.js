@@ -4,7 +4,8 @@ import cardListGrammarText from '!!raw-loader!./cardListGrammar.ohm';
 /* eslint-enable import/no-webpack-loader-syntax */
 
 const cardListGrammar = ohm.grammar(cardListGrammarText);
-const cardListSemantics = cardListGrammar.createSemantics()
+const cardListSemantics = cardListGrammar
+    .createSemantics()
     .addOperation('load', {
         list: function(firstLine, eol1, spaces, otherLines, eol2) {
             return [firstLine.load(), ...otherLines.load()].map((line) => ({
@@ -34,15 +35,23 @@ const cardListSemantics = cardListGrammar.createSemantics()
 
 export default function(input) {
   if(!input) {
-    return [`Parse failure: No input provided`];
+    return {
+        errors: [`Parse failure: No input provided`],
+        matches: []
+    };
   }
 
   const match = cardListGrammar.match(input);
-
   if(match.failed()) {
-      return [`Parse failure: <pre>${match.message}</pre>`];
+      return {
+          errors: [`Parse failure: <pre>${match.message}</pre>`],
+          matches: []
+      };
   }
 
   const result = cardListSemantics(match).load();
-  return result;
+  return {
+      errors: [],
+      matches: result
+  };
 }

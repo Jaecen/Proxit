@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>Proxit</title>
+
+        <link href="https://cdn.jsdelivr.net/npm/keyrune@latest/css/keyrune.css" rel="stylesheet" type="text/css" />
+        <link href="https://cdn.jsdelivr.net/npm/mana-font@latest/css/mana.css" rel="stylesheet" type="text/css" />
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css" rel="stylesheet" type="text/css" />
+        <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/ohm-js@0.14.0/dist/ohm.js"></script>
+
+        <link href="index.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <template id='cardProxyTemplate'>
+     
+            <style>
+                .card-proxy-container {
+                    margin: 0.1mm;
+                }
+
+                .card-proxy-wrapper {
+                    box-sizing: border-box;
+                    width: 63mm;
+                    height: 88mm;
+
+                    padding: 4mm;
+
+                    display: flex;
+                    flex-direction: column;
+
+                    border: 2mm solid black;
+                }
+
+                .card-proxy-wrapper-white {
+                    border-color:#f0f2c0;
+                }
+
+                .card-proxy-wrapper-blue {
+                    border-color:#b5cde3;
+                }
+
+                .card-proxy-wrapper-black {
+                    border-color:#61388a;
+                }
+
+                .card-proxy-wrapper-red {
+                    border-color:#db8664;
+                }
+
+                .card-proxy-wrapper-green {
+                    border-color:#93b483;
+                }
+
+                .card-proxy-wrapper-multicolor {
+                    border-color:#ebbf04;
+                }
+
+                .card-proxy-wrapper-colorless {
+                    border-color:#000000;
+                }
+
+                .card-proxy-wrapper-land {
+                    border-color:#6a4922;
+                }
+
+                .card-proxy-name {
+                    box-sizing: border-box;
+                    flex: 0 0 8mm;
+
+                    font-family: Beleren;
+                    font-size: 8mm;
+                    text-align: center;
+                }
+
+                .card-proxy-spacer {
+                    box-sizing: border-box;
+                    flex: 1;
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    font-size: 4mm;
+                    text-align: center;
+                }
+
+                .card-proxy-field {
+                    box-sizing: border-box;
+                    flex: 0 0 8mm;
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    font-size: 4mm;
+                    text-align: center;
+                }
+
+                .card-proxy-field-type {
+                    font-family: Beleren;
+                }
+
+                .card-proxy-field-symbol {
+                    font-size: 8mm;
+                }
+
+                @media print {
+                    .card-proxy-container {
+                        break-inside: avoid-page;
+                    }
+                }
+            </style>
+
+            <div class='card-proxy-container'>
+                <div class='card-proxy-wrapper'>
+                    <div class='card-proxy-name'>
+                        <slot name='card-name' />
+                    </div>
+                    <div class='card-proxy-field card-proxy-field-type'>
+                        <slot name='card-type' />
+                    </div>
+                    <div class='card-proxy-spacer'>
+                    </div>
+                    <div class='card-proxy-field card-proxy-field-cost'>
+                        <slot name='card-cost' />
+                    </div>
+                    <div class='card-proxy-field card-proxy-field-symbol'>
+                        <slot name='card-symbol' />
+                    </div>
+                </div>
+            </div>
+
+        </template>
+
+        <template id='deckMarkerTemplate'>
+     
+            <style>
+                .deck-marker-container {
+                    display: table-cell;
+                    vertical-align: middle;;
+                    text-align: center;
+
+                    float: left;
+
+                    width: 2in;
+                    height: 1in;
+                    padding: 0.125in;
+
+                    font-size: 0.225in;
+
+                    border: 2px solid black;
+                }
+
+                @media print {
+                    .deck-marker {
+                        page-break-inside: avoid;
+                    }
+                }
+            </style>
+
+            <div class='deck-marker-container'>
+                <div class="deck-marker-symbols">
+                    <slot name='deck-symbols' />
+                </div>
+                <div class="deck-marker-name">
+                    <slot name='deck-name' />
+                </div>
+            </div>
+
+        </template>
+
+        <script type='text/ohm-js'>
+            CardList {
+                list
+                    = line (eol spaces? ~end line)* spaces?
+            
+                line
+                    = whitespace? (quantity whitespace)? cardName (whitespace setName)?
+            
+                quantity
+                    = digit+
+            
+                cardName
+                    = (~cardNameTerminator any)+
+            
+                cardNameTerminator
+                    = " [" | eol
+            
+                setName
+                    = "[" alnum alnum alnum "]"
+            
+                whitespace
+                    = "\t"
+                    | " "
+            
+                eol 
+                    = "\r"? "\n"
+            }
+        </script>
+
+        <section class='hero is-dark is-bold proxit-header'>
+            <div class='hero-body'>
+                <div class='container'>
+                    <h1 class='title'>Proxit</h1>
+                    <h2 class='subtitle'>Text proxy generator</h2>
+                </div>
+            </div>
+        </section>
+
+        <section class='section tab-nav'>
+            <div class="tabs is-medium">
+                <ul>
+                    <li class="is-active">
+                        <a class="tab-nav-card-proxies">Card Proxies</a>
+                    </li>
+                    <li>
+                        <a class="tab-nav-deck-markers">Deck Markers</a>
+                    </li>
+                </ul>
+              </div>
+        </section>
+
+        <section class='section card-entry'>
+            <div class='container'>
+                <div class='field'>
+                    <label class='label'>Card List</label>
+                    <div class='control'>
+                        <textarea class='textarea card-entry-list' rows='30' placeholder="2 Chaos Warp [C14]">
+1 Acidic Slime [CMD]
+1 Grave Pact [CMD]
+1 Command Tower [C13]
+1 Cyclonic Rift [C14]
+1 Sun Titan [C15]
+1 Sol Ring [C16]
+1 Chaos Warp [C17]
+1 Thantis the War Weaver [C18]
+1 Arlinn Kord [SOI]
+                        </textarea>
+                    </div>
+                </div>
+
+                <div class='field is-grouped'>
+                    <div class='control card-entry-submit-control'>
+                        <button class='button is-primary card-entry-submit'>Generate Proxies</button>
+                    </div>
+                    <label class="checkbox include-extra-info-control">
+                        <input type="checkbox" class="include-extra-info" checked="checked" />
+                        Include Set/Type/Cost
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <section class='section deck-entry'>
+            <div class='container'>
+                <div class='field'>
+                    <label class='label'>Deck List</label>
+                    <div class='control'>
+                        <textarea class='textarea deck-entry-list' rows='30' placeholder="WUB Yuriko Ninjas [CMDR]">
+4 WUBG Counters [CMDR]
+4 WUBRG Warriors [CMDR]
+4 UB Zombies [CMDR]
+4 BR Grenzo [CMDR]
+4 WBR Angels [CMDR]
+4 WURB Tokens [CMDR]
+4 UG Merfolk [CMDR]
+4 WUG Enchantments [CMDR]
+4 WBG Reanimator [CMDR]
+4 UBRG Cascade [CMDR]
+                        </textarea>
+                    </div>
+                </div>
+
+                <div class='field is-grouped'>
+                    <div class='control deck-entry-submit-control'>
+                        <button class='button is-primary deck-entry-submit'>Generate Markers</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class='section log is-hidden' id='log'>
+            <div class='container'>
+                <div id='generationNotes'></div>
+            </div>
+        </section>
+
+        <section class='section card-proxies'>
+            <div class='container'>
+                <div id='cardProxyList' class='card-proxy-list'></div>
+            </div>
+        </section>
+
+        <section class='section deck-markers'>
+            <div class='container'>
+                <div class='deck-marker-list'>
+                    <style>
+                        @media print {
+                            .deck-markers {
+                                padding: 0;
+                            }
+
+                            .deck-marker-list {
+                                display: block;
+                            }
+                        }
+                    </style>
+
+                    <!-- Sans-R Counters -->
+                    <div class='deck-marker'>
+                        <div>
+                            <i class="ms ms-cost ms-w"></i>
+                            <i class="ms ms-cost ms-u"></i>
+                            <i class="ms ms-cost ms-b"></i>
+                            <i class="ms ms-cost ms-g"></i>
+                        </div>
+                        <div>
+                            Counters
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <script src='index.js'></script>
+    </body>
+</html>

@@ -1,1 +1,1 @@
-export { default } from './CardProxyManagement.jsx';
+export { default } from './CardProxyManagement';
