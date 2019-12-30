@@ -3,6 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { updateDeckList, requestDeckMarkers } from '../../actions'
 
+import DeckMarker from '../DeckMarker';
+
+import './DeckMarkerManagement.css';
+
 export default () => {
   const dispatch = useDispatch();
   const selectedState = useSelector(state => state.deckMarkerManagement);
@@ -32,7 +36,14 @@ export default () => {
       </div>
     </section>
 
-    {/* <CardProxyList cards={selectedState.cards} /> */}
+    <section class='section deck-markers'>
+      <div class='container'>
+        <div class='deck-marker-list'>
+          <DeckMarker deck={null} />
+          {/* { selectedState.decks } */}
+        </div>
+      </div>
+    </section>
   </>
   );
 };

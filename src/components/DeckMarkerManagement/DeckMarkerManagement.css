@@ -1,0 +1,9 @@
+@media print {
+  .deck-markers {
+      padding: 0;
+  }
+
+  .deck-marker-list {
+      display: block;
+  }
+}
