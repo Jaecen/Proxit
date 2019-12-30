@@ -1,3 +1,9 @@
+.deck-marker-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 @media print {
   .deck-markers {
       padding: 0;

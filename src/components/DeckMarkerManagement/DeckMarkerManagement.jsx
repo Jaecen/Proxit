@@ -36,9 +36,9 @@ export default () => {
       </div>
     </section>
 
-    <section class='section deck-markers'>
-      <div class='container'>
-        <div class='deck-marker-list'>
+    <section className='section deck-markers'>
+      <div className='container'>
+        <div className='deck-marker-list'>
           <DeckMarker deck={null} />
           {/* { selectedState.decks } */}
         </div>

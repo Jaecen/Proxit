@@ -1,0 +1,37 @@
+CardList {
+  list
+    = line (eol spaces? ~end line)* spaces?
+
+  line
+    = whitespace? (quantity whitespace)? colors whitespace name whitespace format
+
+  quantity
+    = digit+
+
+  colors
+    = "C"
+    | color+
+
+  color
+    = "W"
+    | "U"
+    | "R"
+    | "B"
+    | "G"
+
+  name
+    = (~nameTerminator any)+
+
+  nameTerminator
+    = " [" | eol
+
+  format
+    = "[" alnum alnum alnum alnum "]"
+
+  whitespace
+    = "\t"
+    | " "
+
+  eol 
+    = "\r"? "\n"
+}
