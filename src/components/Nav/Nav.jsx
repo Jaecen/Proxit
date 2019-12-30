@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 
 export default function Nav() {
   return (
-    <nav className="navbar">
+    <nav className="navbar is-hidden-print">
       <div className="container">
         <div className="navbar-brand">
           <h1 className="title">

@@ -1,37 +1,17 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import Actions from './actions'
-import Reducer from './reducer'
-
-import { useActions } from './actions' 
-import { applySagaMiddleware } from './sagaMiddleware' 
+import { updateCardList, requestCardProxies } from '../../actions'
 
 import CardProxyList from '../CardProxyList';
 
-const sampleEntry =
-  `1 Acidic Slime [CMD]
-1 Grave Pact [CMD]
-1 Command Tower [C13]
-1 Cyclonic Rift [C14]
-1 Sun Titan [C15]
-1 Sol Ring [C16]
-1 Chaos Warp [C17]
-1 Thantis the War Weaver [C18]
-1 Arlinn Kord [SOI]`;
-
-const initialState = {
-  cardList: sampleEntry,
-  cards: [],
-};
-
-
-
 export default () => {
-  const { state, actions } = React.useContext(CardProxyContext);
+  const dispatch = useDispatch();
+  const selectedState = useSelector(state => state.cardProxyManagement);
 
   return (
     <>
-      <section className="section">
+      <section className="section is-hidden-print">
         <div className='container'>
 
           <div className='field'>
@@ -40,21 +20,21 @@ export default () => {
               <textarea
                 className='textarea card-entry-list'
                 rows='10'
-                value={state.cardList}
-                onChange={ (event) => dispatch(Actions.updateCardList(event.target.value)) } />
+                value={selectedState.cardList}
+                onChange={ (event) => dispatch(updateCardList(event.target.value)) } />
             </div>
           </div>
 
           <div className='field'>
-           <div className='control'>
-            <button className='button is-primary' onClick={ () => dispatch(Actions.requestCardProxies()) }>Generate Proxies</button>
+            <div className='control'>
+            <button className='button is-primary' onClick={ () => dispatch(requestCardProxies(selectedState.cardList)) }>Generate Proxies</button>
             </div>
           </div>
 
         </div>
       </section>
 
-      <CardProxyList cards={state.cards} />
+      <CardProxyList cards={selectedState.cards} />
     </>
   );
 }

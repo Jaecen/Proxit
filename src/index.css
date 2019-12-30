@@ -1,8 +1,14 @@
 @font-face {
   font-family: 'Beleren';
-  src: url('%PUBLIC_URL%/Beleren-Bold.ttf') format('truetype');
+  src: url('/Beleren-Bold.ttf') format('truetype');
 }
 
 body {
   margin: 0;
+}
+
+@media print {
+  .is-hidden-print {
+    display: none !important;
+  }
 }

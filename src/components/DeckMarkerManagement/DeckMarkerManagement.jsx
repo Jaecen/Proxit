@@ -1,34 +1,38 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-const sampleEntry = 
-`4 WUBG Counters [CMDR]
-4 WUBRG Warriors [CMDR]
-4 UB Zombies [CMDR]
-4 BR Grenzo [CMDR]
-4 WBR Angels [CMDR]
-4 WURB Tokens [CMDR]
-4 UG Merfolk [CMDR]
-4 WUG Enchantments [CMDR]
-4 WBG Reanimator [CMDR]
-4 UBRG Cascade [CMDR]`;
+import { updateDeckList, requestDeckMarkers } from '../../actions'
 
-export default function DeckMarkerManagement() {
+export default () => {
+  const dispatch = useDispatch();
+  const selectedState = useSelector(state => state.deckMarkerManagement);
+
   return (
-    <div class='container'>
-      <div class='field'>
-        <label class='label'>Deck List</label>
-        <div class='control'>
-          <textarea class='textarea deck-entry-list' rows='30'>
-            { sampleEntry }
-          </textarea>
-        </div>
-      </div>
+    <>
+    <section className="section is-hidden-print">
+      <div className='container'>
 
-      <div class='field is-grouped'>
-        <div class='control deck-entry-submit-control'>
-          <button class='button is-primary deck-entry-submit'>Generate Markers</button>
+        <div className='field'>
+          <label className='label'>Deck List</label>
+          <div className='control'>
+            <textarea
+              className='textarea deck-entry-list'
+              rows='10'
+              value={selectedState.deckList}
+              onChange={ (event) => dispatch(updateDeckList(event.target.value)) } />
+          </div>
         </div>
+
+        <div className='field'>
+          <div className='control'>
+          <button className='button is-primary' onClick={ () => dispatch(requestDeckMarkers(selectedState.cardList)) }>Generate Markers</button>
+          </div>
+        </div>
+
       </div>
-    </div>
+    </section>
+
+    {/* <CardProxyList cards={selectedState.cards} /> */}
+  </>
   );
 };

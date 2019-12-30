@@ -5,8 +5,6 @@ import {
   Route
 } from "react-router-dom";
 
-import './App.css';
-
 import Nav from '../Nav';
 
 import CardProxyManagement from '../CardProxyManagement';
