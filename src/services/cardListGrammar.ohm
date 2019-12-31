@@ -3,7 +3,7 @@ CardList {
     = line (eol spaces? ~end line)* spaces?
 
   line
-    = whitespace? (quantity whitespace)? cardName (whitespace setName)?
+    = whitespace? (quantity whitespace)? cardName (whitespace setIdentifier)?
 
   quantity
     = digit+
@@ -14,8 +14,11 @@ CardList {
   cardNameTerminator
     = " [" | eol
 
+  setIdentifier
+    = "[" setName "]"
+
   setName
-    = "[" alnum alnum alnum "]"
+    = alnum alnum alnum alnum?
 
   whitespace
     = "\t"

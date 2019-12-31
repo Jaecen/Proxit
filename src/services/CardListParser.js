@@ -14,8 +14,8 @@ const cardListSemantics = cardListGrammar
                 set: line[2][0]
             }))
         },
-        line: function(leadingWhitespace, quantity, spaces1, cardName, spaces2, setName) {
-            return [quantity.load(), cardName.load(), setName.load()];
+        line: function(_ws1, quantity, _ws2, cardName, _ws3, setIdentifier) {
+            return [quantity.load(), cardName.load(), setIdentifier.load()];
         },
         quantity: function(a) {
             return a.load().join('');
@@ -24,10 +24,8 @@ const cardListSemantics = cardListGrammar
             var x = a.load();
             return x.join('');
         },
-        setName: function(a,b,c,d,e) {
-            var x = [b.load(), c.load(), d.load()];
-            return x.join('');
-        },
+        setIdentifier: (_delim1, setName, _delim2) => setName.load(),
+        setName: (a,b,c,d) => [a.load(),b.load(),c.load(),d.load()].join(''),
         _terminal: function() {
             return this.sourceString;
         }
