@@ -1,3 +1,5 @@
 .vscode
 .git
 .github
+node_modules
+build

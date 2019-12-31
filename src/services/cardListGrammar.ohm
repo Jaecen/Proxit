@@ -1,0 +1,26 @@
+CardList {
+  list
+    = line (eol spaces? ~end line)* spaces?
+
+  line
+    = whitespace? (quantity whitespace)? cardName (whitespace setName)?
+
+  quantity
+    = digit+
+
+  cardName
+    = (~cardNameTerminator any)+
+
+  cardNameTerminator
+    = " [" | eol
+
+  setName
+    = "[" alnum alnum alnum "]"
+
+  whitespace
+    = "\t"
+    | " "
+
+  eol 
+    = "\r"? "\n"
+}

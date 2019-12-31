@@ -1,0 +1,96 @@
+.card-proxy-container {
+  margin: 0.1mm;
+}
+
+.card-proxy-wrapper {
+  box-sizing: border-box;
+  width: 63mm;
+  height: 88mm;
+
+  padding: 4mm;
+
+  display: flex;
+  flex-direction: column;
+
+  border: 2mm solid black;
+}
+
+.card-proxy-wrapper-white {
+  border-color:#f0f2c0;
+}
+
+.card-proxy-wrapper-blue {
+  border-color:#b5cde3;
+}
+
+.card-proxy-wrapper-black {
+  border-color:#61388a;
+}
+
+.card-proxy-wrapper-red {
+  border-color:#db8664;
+}
+
+.card-proxy-wrapper-green {
+  border-color:#93b483;
+}
+
+.card-proxy-wrapper-multicolor {
+  border-color:#ebbf04;
+}
+
+.card-proxy-wrapper-colorless {
+  border-color:#000000;
+}
+
+.card-proxy-wrapper-land {
+  border-color:#6a4922;
+}
+
+.card-proxy-name {
+  box-sizing: border-box;
+  flex: 0 0 8mm;
+
+  font-family: Beleren;
+  font-size: 8mm;
+  text-align: center;
+}
+
+.card-proxy-spacer {
+  box-sizing: border-box;
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 4mm;
+  text-align: center;
+}
+
+.card-proxy-field {
+  box-sizing: border-box;
+  flex: 0 0 8mm;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 4mm;
+  text-align: center;
+}
+
+.card-proxy-field-type {
+  font-family: Beleren;
+}
+
+.card-proxy-field-symbol {
+  font-size: 8mm;
+}
+
+@media print {
+  .card-proxy-container {
+      break-inside: avoid-page;
+      float: left;
+  }
+}

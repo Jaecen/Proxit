@@ -1,0 +1,16 @@
+
+.card-proxy-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media print {
+  .card-proxies {
+      padding: 0;
+  }
+
+  .card-proxy-list {
+      display: block;
+  }
+}
