@@ -15,24 +15,40 @@
   border: 2mm solid black;
 }
 
+/* Taken from here: http://i.imgur.com/dMjPOq0.png
+  W BG: rgb(248, 231, 185)
+  W FG: rgb(249, 250, 244)
+
+  U BG: rgb(179, 206, 234)
+  U FG: rgb(014, 104, 171)
+
+  B BG: rgb(166, 159, 157)
+  B FG: rgb(021, 011, 000)
+
+  R BG: rgb(235, 159, 130)
+  R FG: rgb(211, 032, 042)
+
+  G BG: rgb(196, 211, 202)
+  G FG: rgb(000, 115, 062)
+*/
 .card-proxy-wrapper-white {
-  border-color:#f0f2c0;
+  border-color:rgb(248, 231, 185);
 }
 
 .card-proxy-wrapper-blue {
-  border-color:#b5cde3;
+  border-color:rgb(014, 104, 171);
 }
 
 .card-proxy-wrapper-black {
-  border-color:#61388a;
+  border-color:rgb(021, 011, 000);
 }
 
 .card-proxy-wrapper-red {
-  border-color:#db8664;
+  border-color:rgb(211, 032, 042);
 }
 
 .card-proxy-wrapper-green {
-  border-color:#93b483;
+  border-color:rgb(000, 115, 062);
 }
 
 .card-proxy-wrapper-multicolor {
@@ -40,7 +56,7 @@
 }
 
 .card-proxy-wrapper-colorless {
-  border-color:#000000;
+  border-color:rgb(119, 137, 161);
 }
 
 .card-proxy-wrapper-land {
