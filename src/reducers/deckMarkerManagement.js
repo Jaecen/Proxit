@@ -29,7 +29,7 @@ export default (state = initialState, action) => {
     case ActionTypes.DECK_MARKERS_SUCCEEDED:
       return {
         ...state,
-        cards: action.payload
+        decks: action.payload
       };
 
     default:

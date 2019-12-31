@@ -5,20 +5,14 @@ import CardListParser from '../services/CardListParser'
 // worker Saga: will be fired on CARD_PROXIES_REQUESTED actions
 function* loadCardDetails(action) {
   try {
-    const cardList = action.payload;
-
-    console.debug("Parsing card list", cardList);
-
-    if(!cardList) {
+    if(!action.payload) {
       throw new Error("No card list entered.");
     }
     
-    var parseResult = CardListParser(cardList);
+    var parseResult = CardListParser(action.payload);
     if(parseResult.errors.length > 0) {
       throw new Error(parseResult.errors);
     }
-  
-    console.debug("Parse successful", parseResult.matches);
   
     const scryfallCardInfo = yield call(CardDetailLoader, parseResult);
     yield put({ type: "CARD_PROXIES_SUCCEEDED", payload: scryfallCardInfo });

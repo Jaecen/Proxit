@@ -29,7 +29,7 @@ export default () => {
 
         <div className='field'>
           <div className='control'>
-          <button className='button is-primary' onClick={ () => dispatch(requestDeckMarkers(selectedState.cardList)) }>Generate Markers</button>
+          <button className='button is-primary' onClick={ () => dispatch(requestDeckMarkers(selectedState.deckList)) }>Generate Markers</button>
           </div>
         </div>
 
@@ -39,8 +39,7 @@ export default () => {
     <section className='section deck-markers'>
       <div className='container'>
         <div className='deck-marker-list'>
-          <DeckMarker deck={null} />
-          {/* { selectedState.decks } */}
+          { selectedState.decks.map((deck, index) => <DeckMarker key={index} deck={deck} />)}
         </div>
       </div>
     </section>
