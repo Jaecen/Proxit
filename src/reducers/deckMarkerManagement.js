@@ -12,8 +12,10 @@ const sampleEntry =
 4 WBG Reanimator [CMDR]
 4 UBRG Cascade [CMDR]`;
 
+const persistedEntry = localStorage.getItem('deckList');
+
 const initialState = {
-  deckList: sampleEntry,
+  deckList: persistedEntry || sampleEntry,
   decks: [],
 };
 

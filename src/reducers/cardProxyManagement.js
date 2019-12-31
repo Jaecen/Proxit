@@ -1,7 +1,7 @@
 import ActionTypes from "../actionTypes";
 
 const sampleEntry =
-  `1 Acidic Slime [CMD]
+`1 Acidic Slime [CMD]
 1 Grave Pact [CMD]
 1 Command Tower [C13]
 1 Cyclonic Rift [C14]
@@ -11,8 +11,10 @@ const sampleEntry =
 1 Thantis the War Weaver [C18]
 1 Arlinn Kord [SOI]`;
 
+const persistedEntry = localStorage.getItem('cardList');
+
 const initialState = {
-  cardList: sampleEntry,
+  cardList: persistedEntry || sampleEntry,
   cards: [],
 };
 

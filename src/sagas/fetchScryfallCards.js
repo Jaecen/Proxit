@@ -1,6 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 import CardDetailLoader from '../services/CardDetailLoader'
 import CardListParser from '../services/CardListParser'
+import ActionTypes from "../actionTypes";
 
 // worker Saga: will be fired on CARD_PROXIES_REQUESTED actions
 function* loadCardDetails(action) {
@@ -15,13 +16,13 @@ function* loadCardDetails(action) {
     }
   
     const scryfallCardInfo = yield call(CardDetailLoader, parseResult);
-    yield put({ type: "CARD_PROXIES_SUCCEEDED", payload: scryfallCardInfo });
+    yield put({ type: ActionTypes.CARD_PROXIES_SUCCEEDED, payload: scryfallCardInfo });
   } catch (ex) {
     console.error(ex);
-    yield put({ type: "CARD_PROXIES_FAILED", payload: ex });
+    yield put({ type: ActionTypes.CARD_PROXIES_FAILED, payload: ex });
   }
 }
 
 export default function* cardProxySaga() {
-  yield takeLatest("CARD_PROXIES_REQUESTED", loadCardDetails);
+  yield takeLatest(ActionTypes.CARD_PROXIES_REQUESTED, loadCardDetails);
 }
