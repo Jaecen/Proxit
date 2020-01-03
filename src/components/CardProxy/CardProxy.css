@@ -1,18 +1,22 @@
 .card-proxy-container {
-  margin: 0.1mm;
+  box-sizing: border-box;
+
+  width: 62.5mm;
+  height: 87.5mm;
+
+  margin: 0.5px;
+
+  border: 1px solid black;
 }
 
 .card-proxy-wrapper {
-  box-sizing: border-box;
-  width: 63mm;
-  height: 88mm;
-
-  padding: 4mm;
+  height: 100%;
+  padding: 15px;
 
   display: flex;
   flex-direction: column;
 
-  border: 2mm solid black;
+  border: 8px solid black;
 }
 
 /* Taken from here: http://i.imgur.com/dMjPOq0.png
