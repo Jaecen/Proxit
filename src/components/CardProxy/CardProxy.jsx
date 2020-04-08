@@ -27,7 +27,7 @@ export default function({ cardListEntry, scryfallEntry }) {
 
   const symbol = renderExtendedInfo
     ? <div key='symbol' className='card-proxy-field card-proxy-field-symbol'>
-        <Keyrune set={scryfallEntry.set.toLowerCase()} rarity={scryfallEntry.rarity.toLowerCase()} gradient />
+        <Keyrune set={determineSet(scryfallEntry).toLowerCase()} rarity={scryfallEntry.rarity.toLowerCase()} gradient />
       </div>
     : null;
 
@@ -42,7 +42,6 @@ export default function({ cardListEntry, scryfallEntry }) {
         { symbol }
       </div>
     </div>);
-
 
   const proxyCopies = [];
   for(let copyIndex = 0; copyIndex < cardListEntry.quantity; copyIndex++) {
@@ -88,6 +87,21 @@ function determineColor(scryfallEntry) {
   }
 
   return 'multicolor';
+}
+
+function determineSet(scryfallEntry) {
+  // The Keyrune set symbol for PSLD is incorrect. Use the PMEI symbol instead.
+  const set = (scryfallEntry.set || '').toLowerCase();
+  
+  if(set === 'psld') {
+    return 'pmei';
+  }
+
+  if(set === 'sld') {
+    return 'pmei';
+  }
+
+  return scryfallEntry.set;
 }
 
 function buildName(scryfallEntry) {
