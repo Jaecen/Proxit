@@ -5,7 +5,7 @@ import { updateCardList, requestCardProxies } from '../../actions'
 
 import CardProxyList from '../CardProxyList';
 
-export default () => {
+export default function CardProxyManagement() {
   const dispatch = useDispatch();
   const selectedState = useSelector(state => state.cardProxyManagement);
 

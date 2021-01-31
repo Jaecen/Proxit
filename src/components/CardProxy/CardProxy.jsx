@@ -4,7 +4,7 @@ import { Keyrune } from '@saeris/react-keyrune';
 
 import './CardProxy.css';
 
-export default function({ cardListEntry, scryfallEntry }) {
+export default function CardProxy ({ cardListEntry, scryfallEntry }) {
   const renderExtendedInfo = cardListEntry.set || false;
 
   const color = determineColor(scryfallEntry);

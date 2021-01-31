@@ -18,7 +18,7 @@ const initialState = {
   cards: [],
 };
 
-export default (state = initialState, action) => {
+export default function CardProxyManagement(state = initialState, action) {
   switch(action.type) {
 
     case ActionTypes.CARD_LIST_UPDATED:

@@ -19,7 +19,7 @@ const initialState = {
   decks: [],
 };
 
-export default (state = initialState, action) => {
+export default function DeckMarkerManagement(state = initialState, action) {
   switch(action.type) {
 
     case ActionTypes.DECK_LIST_UPDATED:

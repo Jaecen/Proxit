@@ -4,7 +4,7 @@ import CardProxy from '../CardProxy'
 
 import './CardProxyList.css';
 
-export default function({cards}) {
+export default function CardProxyList({cards}) {
   return(
     <section className='section card-proxies'>
       <div className='container'>

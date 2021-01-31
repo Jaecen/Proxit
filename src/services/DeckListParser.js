@@ -25,7 +25,7 @@ const semantics = grammar
     }
 });
 
-export default function(input) {
+export default function DeckListParser(input) {
   if(!input) {
     return {
         errors: [`Parse failure: No input provided`],

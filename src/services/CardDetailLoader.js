@@ -1,4 +1,4 @@
-export default async function(parseResult) {
+export default async function CardDetailLoader(parseResult) {
   // Build a request object
   const requestBody = {
     identifiers: []

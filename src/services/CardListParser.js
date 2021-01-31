@@ -31,7 +31,7 @@ const cardListSemantics = cardListGrammar
         }
     });
 
-export default function(input) {
+export default function CardListParser(input) {
   if(!input) {
     return {
         errors: [`Parse failure: No input provided`],

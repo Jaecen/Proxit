@@ -3,7 +3,7 @@ import { Mana } from '@saeris/react-mana';
 
 import './DeckMarker.css';
 
-export default function({ deck }) {
+export default function DeckMarker({ deck }) {
   const renderMarker = (index) =>
     <div key={index} className='deck-marker'>
       <div className='deck-marker-format'>

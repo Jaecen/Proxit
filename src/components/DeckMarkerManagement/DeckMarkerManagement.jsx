@@ -7,7 +7,7 @@ import DeckMarker from '../DeckMarker';
 
 import './DeckMarkerManagement.css';
 
-export default () => {
+export default function DeckMarkerManagement() {
   const dispatch = useDispatch();
   const selectedState = useSelector(state => state.deckMarkerManagement);
 
